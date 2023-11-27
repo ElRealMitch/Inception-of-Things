@@ -18,6 +18,10 @@ We must have dedicated IP on <b>eth1</b> interface:
 
 We also must be able to connect with ssh on both machine with <b>no password</b>.
 
+After doing that, we have to setup k3s cluster:<br>
+<img src ="./p1/Docs/Kub_cluster_map.png"/><br>
+
+
 <br>
 </details>
 <details>
