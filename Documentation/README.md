@@ -55,6 +55,12 @@ p2/
 | --- services.yml
 | --- ingress.yml
 ```
+So far we have to do it in three steps:
+<ul>
+	<li>Deploy pods</li>
+	<li>Expose pods over a network (Services)</li>
+	<li>Control how web traffic reach workload (Ingress)</li>
+</ul>
 
 </details>
 <details>
