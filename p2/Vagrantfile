@@ -1,0 +1,27 @@
+machines=[
+	{
+		:hostname => "jcervoniS",
+		:name => "jcervoni",
+		:ip => "192.168.56.110",
+		:box => "generic/debian10",
+		:ram => 4096,
+		:cpu => 4,
+		:script => "./Scripts/server.sh"
+	},
+]
+
+Vagrant.configure("2") do |config|
+    machines.each do |machine|
+        config.vm.define machine[:hostname] do |node|
+            node.vm.box = machine[:box]
+            node.vm.hostname = machine[:hostname]
+            node.vm.network "public_network", ip: machine[:ip]
+            node.vm.provider "virtualbox" do |vb|
+                vb.name = machine[:name]
+                vb.memory = machine[:ram]
+                vb.cpus = machine[:cpu]
+            end
+            node.vm.provision "shell", path: machine[:script]
+        end
+    end
+end
