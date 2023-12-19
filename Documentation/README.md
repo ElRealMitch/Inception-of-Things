@@ -4,7 +4,7 @@
 <summary><b>Part one</b></summary>
 <br>
 
-We need to set up two virtual machines with *vagrant*:
+We need to set up two virtual machines with *vagrant* and install <b>K3s</b> respectively in <b>controller mode</b> and <b>agent mode</b> (server and worker).:
 <ul>
 	<li>first one as <b>Server</b> (-> sufixed with 'S')</li>
 	<li> second as <b>Server Worker</b> (-> sufixed with 'SW')</li>
@@ -23,12 +23,38 @@ After doing that, we have to setup k3s cluster:<br>
 
 
 <br>
+After setting up our Vagrantfile, we connect to the server node and can see machines are ready with right role and address:<br>
+
+```shell
+vagrant up
+vagrant ssh jcervoniS
+kubectl get nodes -o wide
+```
+<img src ="./images/p1_nodes.png"/><br>
+
 </details>
 <details>
 <summary><b>Part two</b></summary>
-<h2><a href="https://kubernetes.io/fr/">Kubernetes</a></h2>
 
-We have to install <b>K3s</b> respectively in <b>controller mode</b> and <b>agent mode</b> (server and worker).
+In this part we have to deploy 3 apps in <b>*one*</b> cluster.<br>
+We will have to respect 3 points here:
+<ul>
+	<li>the 3 apps should be reachable at the same ip address, with a different HOST</li>
+	<li>app 2 should have 3 replicas</li>
+	<li>by default if no host is provided we should reach app 3</li>
+</ul>
+
+Each app will be configured in a \<*app_name*\><b>.yml</b> file, we'll do the same for services and network.<br>
+Architecture example:<br>
+```
+p2/
+| --- Vagrantfile
+| --- app1.yml
+| --- app2.yml
+| --- app3.yml
+| --- services.yml
+| --- ingress.yml
+```
 
 </details>
 <details>
@@ -48,7 +74,11 @@ We have to install <b>K3s</b> respectively in <b>controller mode</b> and <b>agen
 	<details>
 		<summary>Kubernetes</summary>
 		<ul>
-			<li><a href="https://kubernetes.io/fr/docs/tasks/tools/install-kubectl/">kubectl<a>
+			<li><a href="https://kubernetes.io/fr/">Kubernetes</a></li>
+			<li><a href="https://kubernetes.io/fr/docs/tasks/tools/install-kubectl/">Kubectl<a></li>
+			<li><a href="https://kubernetes.io/docs/concepts/services-networking/ingress/">Ingress</li>
+			<li><a href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment/">Deployment</li>
+			<li><a href="https://ubernetes.io/docs/concepts/services-networking/serice/">Service</li>
 		</ul>
 	</details>
 </ul>
