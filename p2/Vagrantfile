@@ -1,3 +1,5 @@
+$SYNCED_FOLDER="/vagrant"
+
 machines=[
 	{
 		:hostname => "jcervoniS",
@@ -12,6 +14,7 @@ machines=[
 
 Vagrant.configure("2") do |config|
     machines.each do |machine|
+        config.vm.synced_folder ".", $SYNCED_FOLDER, type: "rsync", automount: true
         config.vm.define machine[:hostname] do |node|
             node.vm.box = machine[:box]
             node.vm.hostname = machine[:hostname]

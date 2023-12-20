@@ -4,7 +4,8 @@ metadata:
   name: app-one
 spec:
   type: ClusterIP
-  selector: app-one
+  selector: 
+    app: app-one
   ports:
   - port: 80
     targetPort: 8080
@@ -15,7 +16,8 @@ metadata:
   name: app-two
 spec:
   type: ClusterIP
-  selector: app-two
+  selector: 
+    app: app-two
   ports: 
   - port: 80
     targetPort: 8080
@@ -26,7 +28,8 @@ metadata:
   name: app-three
 spec:
   type: ClusterIP
-  selector: app-three
+  selector: 
+    app: app-three
   ports:
   - port: 80
     targetPort: 8080

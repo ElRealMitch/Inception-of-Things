@@ -2,35 +2,38 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: iotp2-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: / # not sure if it's efficient
 spec:
   rules:
-  - host: "app1.com"
-  - http:
+  - host: app1.com
+    http:
       paths:
-      - pathType: Exact
-        path: /app1.com
-        backend:
-          service:
-            name: app-one
-            port:
-              number: 80
-  - host: "app2.com"
-  - http:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: app-one
+              port:
+                number: 80
+
+  - host: app2.com
+    http:
       paths:
-      - pathType: Exact
-        path: /app2.com
-        backend:
-          service:
-            name: app-two
-            port:
-              number: 80
-  - host: "app3.com"
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: app-two
+              port:
+                number: 80
+
   - http: 
       paths:
-      - pathType: Prefix
-        path: / , /app3.com
-        backend:
-          service:
-            name: app-three
-            port: 
-              number: 80
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: app-three
+              port: 
+                number: 80
