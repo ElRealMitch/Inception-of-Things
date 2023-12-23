@@ -123,7 +123,7 @@ We now need to define rules to manage external access to services and provide lo
 Ingress will expose routes outside the cluster to services within the cluster.<br>
 With ingress, we will be able to act like a DNS, and set a bunch of rules which will manage redirections like this schema from official documentation:<br><br>
 <img src="./images/ingress_example.png"/><br><br>
-Routing rules can be defined severla ways, here we'll use *paths* and *hosts*:
+Routing rules can be defined several ways, here we'll use *paths* and *hosts*:
 ```yml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
