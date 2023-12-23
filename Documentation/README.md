@@ -61,7 +61,88 @@ So far we have to do it in three steps:
 	<li>Expose pods over a network (Services)</li>
 	<li>Control how web traffic reach workload (Ingress)</li>
 </ul>
+___<br>
+<h3>Deployment</h3>
 
+Deployment can be done an easy way with a <b>.yml</b> file. We have to specify the specs of the pods as *label*, number of *replicas* and choose which app will run in the container (aka *image*).<br>
+Here is an example of an app deployment file:<br>
+```yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-one
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-one
+  template:
+    metadata:
+      labels:
+        app: app-one
+    spec:
+      containers:
+      - name: hello-kubernetes
+        image: paulbouwer/hello-kubernetes:1.10
+        ports:
+        - containerPort: 8080
+        env:
+        - name: MESSAGE
+          value: "Hello from app1"
+```
+
+<h3>Expose app</h3>
+
+Exposing an app can be done by setting up a <b>Service</b>. With Kubernetes, pods deployed in a cluster will be created and can also die.<br>
+Service is an abstract way to describe a pod/set of pods that can be reachable, without taking care of the IP address of pods, at any time of their cycle of life.<br>
+So far we have to create a service (a REST object):<br>
+```yml
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-one
+spec:
+  type: ClusterIP
+  selector: 
+    app: app-one
+  ports:
+  - port: 80
+    targetPort: 8080
+```
+As we can see we only have to tag an app (label), and specify a couple of ports (server/pod). We also define the type of service we want.<br>
+In this case, <b>Cluster-IP</b> allow the pod to b reachable only fro the inside of the cluster. That means that a client who tries to ask for this service/app <br>will comunicate only with the server node, and server node will communicate with the rest of the cluster.
+
+<h3>Web traffic control</h3>
+
+Last part of the cluster's configuration. So far we have:<br>
+- a server node, acting like a proxy;
+- app deployed in cluster;
+- services that describe app in cluster.
+
+We now need to define rules to manage external access to services and provide load-balance.<br>
+Ingress will expose routes outside the cluster to services within the cluster.<br>
+With ingress, we will be able to act like a DNS, and set a bunch of rules which will manage redirections like this schema from official documentation:<br><br>
+<img src="./images/ingress_example.png"/><br><br>
+Routing rules can be defined severla ways, here we'll use *paths* and *hosts*:
+```yml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: iotp2-ingress
+spec:
+  rules:
+  - host: app1.com
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: app-one
+              port:
+                number: 80
+```
+Now <b>app1</b> is available on route <b>http://*<ip_address>*/app1.com</b> on port 80.
 </details>
 <details>
 <summary><b>Part three</b></summary>
