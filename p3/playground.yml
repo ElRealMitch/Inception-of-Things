@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: application
+metadata:
+  name: wil-playground
+spec:
+  destination:
+    name: IoT
+    namespace: dev
+    server: ''
+  source:
+    path: playground
+    repoUrl: wil42/playground
