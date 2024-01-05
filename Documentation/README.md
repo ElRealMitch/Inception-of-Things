@@ -144,8 +144,11 @@ spec:
 ```
 Now <b>app1</b> is available on route <b>http://*<ip_address>*/app1.com</b> on port 80.
 </details>
+
 <details>
 <summary><b>Part three</b></summary>
+<br>
+In this part we must use K3D instead of K3S, that means we will need Docker.
 </details>
 
 <details>
