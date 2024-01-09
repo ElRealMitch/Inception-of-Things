@@ -9,4 +9,3 @@ items:
   kind: Namespace
   metadata:
     name: argocd
-    # type: LoadBalancer

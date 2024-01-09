@@ -5,14 +5,17 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
+  destination:
+    name: ''
+    namespace: dev
+    server: 'https://kubernetes.default.svc'
   source:
-    repoURL: https://github.com/ElRealMitch/jcervoni-IoT-apps.git/
+    repoURL: 'https://github.com/ElRealMitch/jcervoni-IoT-apps'
     targetRevision: HEAD
     path: playground
-  destination: # in-cluster ?
-    name: IoT
-    namespace: dev
-    server: https://kubernetes.default.svc/
+  sources: []
   project: default
   syncPolicy:
-    automated: {}
+    automated:
+      prune: true
+      selfHeal: true
